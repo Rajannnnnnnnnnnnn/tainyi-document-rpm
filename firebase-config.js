@@ -2,13 +2,14 @@
 // Paste the Firebase Web App config from Firebase Console here.
 // Do NOT change EDITOR_EMAIL unless you also change it in database.rules.json
 window.FIREBASE_CONFIG = {
-  apiKey: "PASTE_API_KEY_HERE",
-  authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://PASTE_DATABASE_NAME-default-rtdb.firebaseio.com",
-  projectId: "PASTE_PROJECT_ID",
-  storageBucket: "PASTE_PROJECT_ID.firebasestorage.app",
-  messagingSenderId: "PASTE_MESSAGING_SENDER_ID",
-  appId: "PASTE_APP_ID"
+  apiKey: "AIzaSyAUp4apYlF7MjkUrwKqLLgw5GPAFsdAMlk",
+  authDomain: "rpmmn-43b31.firebaseapp.com",
+  databaseURL: "https://rpmmn-43b31-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "rpmmn-43b31",
+  storageBucket: "rpmmn-43b31.firebasestorage.app",
+  messagingSenderId: "306214389531",
+  appId: "1:306214389531:web:391666b2ef8c18be52f5be",
+  measurementId: "G-E2MK17CKSV"
 };
 
 // This account is created ONCE in Firebase Authentication.
