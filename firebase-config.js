@@ -14,5 +14,4 @@ window.FIREBASE_CONFIG = {
 // This account is created ONCE in Firebase Authentication.
 // Players never type the email — only the shared editor password.
 window.BOARD_EDITOR_EMAIL = "editor@board.example";
-
 window.BOARD_PLAYER_EMAIL = "player@board.example";
