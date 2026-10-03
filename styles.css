@@ -79,8 +79,8 @@ body.editor-mode #syncBadge::before{content:"✎ "}
 /* ===== Separate player/editor access ===== */
 #playerButton{
   position:fixed;
-  right:60px;
-  top:16px;
+  right:16px;
+  top:58px;
   z-index:1500;
   width:36px;
   height:36px;
