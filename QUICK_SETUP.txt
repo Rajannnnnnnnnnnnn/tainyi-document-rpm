@@ -1,0 +1,20 @@
+ДВА УРОВНЯ ДОСТУПА
+
+Firebase Authentication -> Users -> Add user:
+
+1) АДМИНИСТРАТОР
+Email: editor@board.example
+Password: свой отдельный админ-пароль
+
+2) УЧАСТНИК
+Email: player@board.example
+Password: общий пароль, который можно дать проверенным игрокам
+
+На сайте:
+⚙ = администратор. Может включать/скрывать и двигать.
+✋ = участник. Может ТОЛЬКО двигать/поворачивать уже открытые улики.
+
+ВАЖНО:
+После замены проекта заново вставь database.rules.json в Realtime Database -> Rules -> Publish.
+Также загрузи обновлённый firebase-config.js, где есть:
+window.BOARD_PLAYER_EMAIL = "player@board.example";

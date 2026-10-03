@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "boards": {
+      "main": {
+        ".read": true,
+        "items": {
+          "$itemId": {
+            ".write": "auth != null && auth.token.email == 'editor@board.example'",
+            "x": {
+              ".write": "auth != null && (auth.token.email == 'editor@board.example' || auth.token.email == 'player@board.example')"
+            },
+            "y": {
+              ".write": "auth != null && (auth.token.email == 'editor@board.example' || auth.token.email == 'player@board.example')"
+            },
+            "rot": {
+              ".write": "auth != null && (auth.token.email == 'editor@board.example' || auth.token.email == 'player@board.example')"
+            },
+            "z": {
+              ".write": "auth != null && (auth.token.email == 'editor@board.example' || auth.token.email == 'player@board.example')"
+            }
+          }
+        }
+      }
+    }
+  }
+}

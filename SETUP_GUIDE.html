@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Настройка realtime-доски</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:900px;margin:40px auto;padding:0 20px;line-height:1.55;color:#25211d}
+h1,h2{font-family:Georgia,serif}code,pre{background:#f1eee8;border:1px solid #ddd4c8;border-radius:7px}
+code{padding:2px 5px}pre{padding:14px;overflow:auto}
+.step{padding:15px 18px;margin:15px 0;border-left:4px solid #8e1d22;background:#faf7f2}
+.ok{padding:12px 15px;background:#eef7ef;border:1px solid #b9d8bd;border-radius:8px}
+.warn{padding:12px 15px;background:#fff6dd;border:1px solid #e4cf8d;border-radius:8px}
+</style>
+</head>
+<body>
+<h1>Настройка общей realtime-доски</h1>
+<p>После этой настройки сайт можно хранить бесплатно на GitHub Pages. Firebase будет только синхронизировать улики между всеми открытыми страницами.</p>
+
+<div class="ok"><b>После настройки:</b> администратор включает улику → она появляется у всех; редактор двигает или поворачивает фото → это сразу видят остальные пользователи.</div>
+
+<h2>1. Создай проект Firebase</h2>
+<div class="step">
+Открой Firebase Console → <b>Create a project</b> → создай обычный проект. Google Analytics для этого сайта не обязателен.
+</div>
+
+<h2>2. Добавь Web App</h2>
+<div class="step">
+В Firebase Project Overview нажми значок <b>&lt;/&gt;</b> → зарегистрируй Web App.<br>
+Firebase покажет объект <code>firebaseConfig</code>.
+</div>
+
+<h2>3. Заполни firebase-config.js</h2>
+<div class="step">
+Открой файл <code>firebase-config.js</code> из архива и замени только значения с <code>PASTE_...</code> на значения своего Firebase.
+</div>
+
+<pre>window.FIREBASE_CONFIG = {
+  apiKey: "...",
+  authDomain: "...",
+  databaseURL: "...",
+  projectId: "...",
+  storageBucket: "...",
+  messagingSenderId: "...",
+  appId: "..."
+};</pre>
+
+<div class="warn"><b>Важно:</b> Firebase Web config не является паролем от Firebase. Он предназначен для размещения в клиентском сайте. Защита записи выполняется Database Rules + Authentication.</div>
+
+<h2>4. Включи Realtime Database</h2>
+<div class="step">
+Firebase Console → <b>Build → Realtime Database → Create Database</b>.<br>
+После создания открой вкладку <b>Rules</b>.
+</div>
+
+<p>Скопируй туда содержимое файла <code>database.rules.json</code> из архива:</p>
+
+<pre>{
+  "rules": {
+    "boards": {
+      "main": {
+        ".read": true,
+        ".write": "auth != null && auth.token.email == 'editor@board.example'"
+      }
+    }
+  }
+}</pre>
+
+<p>Нажми <b>Publish</b>.</p>
+
+<h2>5. Создай одного общего редактора</h2>
+<div class="step">
+Firebase Console → <b>Build → Authentication → Get started</b>.<br>
+Во вкладке Sign-in method включи <b>Email/Password</b>.<br><br>
+Затем открой <b>Users → Add user</b> и создай <b>ДВА</b> аккаунта:
+</div>
+
+<pre>1) Администратор
+Email: editor@board.example
+Password: отдельный пароль администратора
+
+2) Участники
+Email: player@board.example
+Password: общий пароль для проверенных участников</pre>
+
+<p>Например, пароль можешь сделать <code>Murphy47RPM!</code>. Администратор входит через кнопку ⚙ и видит панель включения/скрытия улик. Участники входят через кнопку ✋ и могут только перемещать и поворачивать уже открытые улики. Email сайт подставляет сам.</p>
+
+<h2>6. Разреши адрес GitHub Pages</h2>
+<div class="step">
+После публикации сайта узнай свой адрес вида:<br>
+<code>https://USERNAME.github.io/REPOSITORY/</code><br><br>
+В Firebase Authentication открой <b>Settings → Authorized domains</b> и добавь:<br>
+<code>USERNAME.github.io</code>
+</div>
+
+<h2>7. Залей сайт на GitHub</h2>
+<div class="step">
+Создай новый репозиторий GitHub.<br>
+Распакуй ZIP и загрузи <b>содержимое папки</b> в корень репозитория: index.html, script.js, styles.css, firebase-config.js, assets и т.д.
+</div>
+
+<p>Затем:</p>
+<pre>GitHub → Repository → Settings → Pages
+Source: Deploy from a branch
+Branch: main
+Folder: / (root)
+Save</pre>
+
+<h2>8. Первый запуск</h2>
+<div class="step">
+Открой опубликованный сайт.<br>Администратор нажимает <b>⚙</b> и вводит пароль editor@board.example.<br>Проверенные участники нажимают <b>✋</b> и вводят пароль player@board.example.<br><br>
+При первом входе сайт сам создаст структуру доски в Realtime Database. По умолчанию <b>все улики скрыты</b>.
+</div>
+
+<h2>Как пользоваться во время МП</h2>
+<div class="step">
+<b>Обычный игрок:</b> открывает ссылку и видит общую доску. Может двигать/масштабировать сам вид доски, но не улики.<br><br>
+<b>Проверенный пользователь:</b> нажимает ⚙ → вводит общий пароль. После этого может:<br>
+• включать/скрывать улики в админ-панели;<br>
+• перетаскивать фотографии и документы;<br>
+• поворачивать выбранный объект Q/E;<br>
+• поворачивать Alt + колесо мыши;<br>
+• сбрасывать расположение.<br><br>
+Все эти изменения синхронизируются у всех пользователей почти сразу.
+</div>
+
+<h2>Если что-то не работает</h2>
+<ul>
+<li><b>Firebase не настроен</b> — проверь firebase-config.js.</li>
+<li><b>Вход не принимает пароль</b> — проверь Authentication → Users и Email/Password.</li>
+<li><b>Вход есть, но двигать нельзя</b> — проверь Database Rules.</li>
+<li><b>На GitHub вход блокируется</b> — добавь <code>USERNAME.github.io</code> в Authorized domains.</li>
+<li><b>databaseURL отсутствует в config</b> — скопируй его со страницы Realtime Database.</li>
+</ul>
+
+<p class="ok"><b>На этом всё.</b> После первоначальной настройки код больше менять не нужно. Управление уликами происходит прямо на сайте через ⚙.</p>
+</body>
+</html>
+<h2>Роли на сайте</h2>
+<div class="step">
+<b>Обычный посетитель:</b> только смотрит.<br><br>
+<b>Участник ✋:</b> может двигать и поворачивать открытые улики. Не видит админ-панель и не может включать/скрывать доказательства.<br><br>
+<b>Администратор ⚙:</b> может всё: двигать, поворачивать, включать и скрывать улики, а также сбрасывать расположение.
+</div>
