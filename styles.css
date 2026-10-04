@@ -78,18 +78,17 @@ body.editor-mode #syncBadge::before{content:"✎ "}
 
 /* ===== Separate player/editor access ===== */
 #playerButton{
-  position:fixed;
-  right:60px;
-  top:16px;
-  z-index:1500;
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  border:1px solid rgba(220,205,175,.45);
-  color:#f3e9d3;
-  background:rgba(50,39,31,.86);
-  box-shadow:0 8px 18px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.08);
-  cursor:pointer;
+  position: fixed !important;
+  right: 16px !important;
+  top: 60px !important;
+  z-index: 5000 !important;
+
+  width: 36px !important;
+  height: 36px !important;
+
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 #playerButton:hover{filter:brightness(1.08)}
 body.player-mode #playerButton{
