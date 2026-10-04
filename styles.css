@@ -154,3 +154,159 @@ body.admin-mode #syncBadge::before{content:"⚙ "}
 .archive-coordinates{text-align:center;color:#55bd69;font-size:13px;letter-spacing:2px}
 .archive-code{margin-top:9px;text-align:center;color:#82ff9b;font-size:35px;font-weight:700;letter-spacing:4px;text-shadow:0 0 10px rgba(66,255,100,.25)}
 .decoder-note input,.decoder-note button{user-select:auto}
+
+
+/* ===== HARD FIX: Murphy terminal cards must render as real green archive screens ===== */
+#murphyDecoder,
+#murphyRoute{
+  background:#031008 !important;
+  color:#63ef7f !important;
+  border:2px solid #2a8b43 !important;
+  border-radius:5px !important;
+  overflow:hidden !important;
+  box-shadow:
+    0 18px 34px rgba(0,0,0,.52),
+    0 0 22px rgba(62,235,100,.10),
+    inset 0 0 30px rgba(0,0,0,.78) !important;
+}
+
+#murphyDecoder *,
+#murphyRoute *{
+  color:inherit;
+}
+
+#murphyDecoder .decoder-ui,
+#murphyRoute .archive-site{
+  width:100%;
+  min-height:100%;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(72,255,102,.035) 0px,
+      rgba(72,255,102,.035) 1px,
+      transparent 1px,
+      transparent 4px
+    ),
+    radial-gradient(circle at 50% 0%, rgba(31,125,51,.16), transparent 42%),
+    #04110a !important;
+  color:#63ef7f !important;
+  font-family:"Courier New",Consolas,monospace !important;
+  text-shadow:0 0 5px rgba(83,255,116,.18);
+}
+
+#murphyDecoder .decoder-top,
+#murphyRoute .archive-site-head{
+  background:#07190d !important;
+  border-bottom:1px solid #348e48 !important;
+  color:#77f492 !important;
+  padding:10px 12px !important;
+}
+
+#murphyDecoder .decoder-screen{
+  background:transparent !important;
+  color:#63ef7f !important;
+  padding:16px !important;
+}
+
+#murphyDecoder .decoder-line,
+#murphyDecoder .decoder-question,
+#murphyDecoder .decoder-input-row,
+#murphyDecoder .decoder-result,
+#murphyDecoder .decoder-footer,
+#murphyRoute .archive-site-status,
+#murphyRoute .archive-site-body,
+#murphyRoute .archive-command,
+#murphyRoute .archive-message,
+#murphyRoute .archive-coordinates,
+#murphyRoute .archive-code,
+#murphyRoute .archive-site-foot{
+  color:#63ef7f !important;
+}
+
+#murphyDecoder .decoder-input{
+  color:#8aff9f !important;
+  caret-color:#8aff9f !important;
+  background:#020a05 !important;
+  border:1px solid #296f3a !important;
+  border-radius:3px !important;
+  padding:8px 9px !important;
+  text-transform:uppercase !important;
+  box-shadow:inset 0 0 10px rgba(0,0,0,.55) !important;
+}
+
+#murphyDecoder .decoder-input::placeholder{
+  color:#307b40 !important;
+}
+
+#murphyDecoder .decoder-submit,
+#murphyDecoder .decoder-reset{
+  background:#071b0d !important;
+  color:#7dff98 !important;
+  border:1px solid #37994f !important;
+  box-shadow:inset 0 0 8px rgba(64,225,94,.06) !important;
+}
+
+#murphyDecoder .decoder-submit:hover,
+#murphyDecoder .decoder-reset:hover{
+  background:#0c2b14 !important;
+}
+
+#murphyDecoder .decoder-result.success{
+  color:#91ffa6 !important;
+}
+
+#murphyDecoder .decoder-result.error{
+  color:#ff6b6b !important;
+  text-shadow:none !important;
+}
+
+#murphyDecoder .decoder-footer,
+#murphyRoute .archive-site-foot{
+  background:#06160b !important;
+  border-top:1px solid #286e39 !important;
+  color:#3fa456 !important;
+}
+
+#murphyRoute .archive-site-status{
+  margin:16px !important;
+  padding:8px 10px !important;
+  background:#0a2511 !important;
+  border:1px solid #43bb5e !important;
+  text-align:center !important;
+  font-weight:700 !important;
+  letter-spacing:1px !important;
+}
+
+#murphyRoute .archive-message{
+  background:rgba(40,160,66,.09) !important;
+  border-left:3px solid #69f084 !important;
+  padding:16px !important;
+  color:#75f58e !important;
+}
+
+#murphyRoute .archive-message strong{
+  color:#9affad !important;
+}
+
+#murphyRoute .archive-code{
+  color:#96ffaa !important;
+  font-size:36px !important;
+  font-weight:700 !important;
+  text-align:center !important;
+  letter-spacing:5px !important;
+}
+
+#murphyRoute .archive-coordinates{
+  color:#54c86c !important;
+  text-align:center !important;
+}
+
+#murphyRoute .archive-separator{
+  border-top:1px dashed #397e47 !important;
+}
+
+/* keep the two terminal cards fully inside the cork board */
+#murphyDecoder,
+#murphyRoute{
+  max-width:calc(var(--bw) - 56px);
+}
