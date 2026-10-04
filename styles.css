@@ -156,157 +156,80 @@ body.admin-mode #syncBadge::before{content:"⚙ "}
 .decoder-note input,.decoder-note button{user-select:auto}
 
 
-/* ===== HARD FIX: Murphy terminal cards must render as real green archive screens ===== */
-#murphyDecoder,
-#murphyRoute{
-  background:#031008 !important;
-  color:#63ef7f !important;
-  border:2px solid #2a8b43 !important;
-  border-radius:5px !important;
-  overflow:hidden !important;
-  box-shadow:
-    0 18px 34px rgba(0,0,0,.52),
-    0 0 22px rgba(62,235,100,.10),
-    inset 0 0 30px rgba(0,0,0,.78) !important;
-}
-
-#murphyDecoder *,
-#murphyRoute *{
-  color:inherit;
-}
-
-#murphyDecoder .decoder-ui,
-#murphyRoute .archive-site{
-  width:100%;
-  min-height:100%;
+/* ===== Crumpled clue notes ===== */
+.crumpled-note{
+  position:absolute;
+  padding:18px 18px 20px;
+  color:#33271b;
+  border:1px solid #bea781;
+  border-radius:2px;
   background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(72,255,102,.035) 0px,
-      rgba(72,255,102,.035) 1px,
-      transparent 1px,
-      transparent 4px
-    ),
-    radial-gradient(circle at 50% 0%, rgba(31,125,51,.16), transparent 42%),
-    #04110a !important;
-  color:#63ef7f !important;
-  font-family:"Courier New",Consolas,monospace !important;
-  text-shadow:0 0 5px rgba(83,255,116,.18);
+    radial-gradient(circle at 16% 18%, rgba(255,255,255,.52), transparent 20%),
+    radial-gradient(circle at 78% 22%, rgba(122,90,48,.10), transparent 22%),
+    radial-gradient(circle at 28% 78%, rgba(122,90,48,.08), transparent 25%),
+    repeating-linear-gradient(180deg, rgba(120,94,54,.075) 0 1px, transparent 1px 28px),
+    linear-gradient(175deg, rgba(255,255,255,.20), rgba(0,0,0,.05)),
+    #ddd0b6;
+  box-shadow:
+    0 15px 26px rgba(0,0,0,.28),
+    inset 0 1px 0 rgba(255,255,255,.6),
+    inset 15px 0 24px rgba(255,255,255,.07),
+    inset -18px -10px 28px rgba(113,83,45,.08);
 }
-
-#murphyDecoder .decoder-top,
-#murphyRoute .archive-site-head{
-  background:#07190d !important;
-  border-bottom:1px solid #348e48 !important;
-  color:#77f492 !important;
-  padding:10px 12px !important;
+.crumpled-note::before,
+.crumpled-note::after{
+  content:"";
+  position:absolute;
+  pointer-events:none;
 }
-
-#murphyDecoder .decoder-screen{
-  background:transparent !important;
-  color:#63ef7f !important;
-  padding:16px !important;
+.crumpled-note::before{
+  inset:8px;
+  border:1px solid rgba(86,61,36,.10);
 }
-
-#murphyDecoder .decoder-line,
-#murphyDecoder .decoder-question,
-#murphyDecoder .decoder-input-row,
-#murphyDecoder .decoder-result,
-#murphyDecoder .decoder-footer,
-#murphyRoute .archive-site-status,
-#murphyRoute .archive-site-body,
-#murphyRoute .archive-command,
-#murphyRoute .archive-message,
-#murphyRoute .archive-coordinates,
-#murphyRoute .archive-code,
-#murphyRoute .archive-site-foot{
-  color:#63ef7f !important;
+.crumpled-note::after{
+  left:11px; right:11px; top:11px; bottom:11px;
+  background:
+    radial-gradient(circle at 18% 24%, rgba(138,112,76,.09) 0 10%, transparent 11%),
+    radial-gradient(circle at 75% 18%, rgba(138,112,76,.07) 0 9%, transparent 10%),
+    radial-gradient(circle at 72% 74%, rgba(138,112,76,.06) 0 11%, transparent 12%),
+    linear-gradient(135deg, transparent 0 44%, rgba(112,86,51,.06) 45% 47%, transparent 48%),
+    linear-gradient(25deg, transparent 0 62%, rgba(112,86,51,.05) 63% 65%, transparent 66%);
+  mix-blend-mode:multiply;
 }
-
-#murphyDecoder .decoder-input{
-  color:#8aff9f !important;
-  caret-color:#8aff9f !important;
-  background:#020a05 !important;
-  border:1px solid #296f3a !important;
-  border-radius:3px !important;
-  padding:8px 9px !important;
-  text-transform:uppercase !important;
-  box-shadow:inset 0 0 10px rgba(0,0,0,.55) !important;
+.crumpled-note h3{
+  margin:8px 0 12px;
+  font:700 30px/1.02 Georgia,serif;
+  letter-spacing:.4px;
 }
-
-#murphyDecoder .decoder-input::placeholder{
-  color:#307b40 !important;
+.crumpled-note p{margin:7px 0;font-size:18px;line-height:1.28}
+.crumpled-note .quote{font-size:17px;line-height:1.34;color:#473729}
+.crumpled-note .lead{font-weight:700;font-size:18px;line-height:1.3}
+.crumpled-note .note-tag{
+  display:inline-block;
+  margin:0 0 8px;
+  padding:4px 10px;
+  border:1px solid rgba(127,86,40,.55);
+  background:rgba(255,255,255,.18);
+  color:#6b4c2c;
+  font:700 11px/1.1 Arial,sans-serif;
+  letter-spacing:1.6px;
+  text-transform:uppercase;
 }
-
-#murphyDecoder .decoder-submit,
-#murphyDecoder .decoder-reset{
-  background:#071b0d !important;
-  color:#7dff98 !important;
-  border:1px solid #37994f !important;
-  box-shadow:inset 0 0 8px rgba(64,225,94,.06) !important;
+.crumpled-note .paper-fold{
+  position:absolute;
+  right:0;
+  bottom:0;
+  width:34px;
+  height:34px;
+  background:linear-gradient(135deg, rgba(104,75,39,.10) 0 49%, rgba(255,255,255,.48) 50% 100%);
+  clip-path:polygon(100% 0,0 100%,100% 100%);
+  border-left:1px solid rgba(118,87,51,.18);
+  border-top:1px solid rgba(118,87,51,.08);
+  opacity:.9;
 }
-
-#murphyDecoder .decoder-submit:hover,
-#murphyDecoder .decoder-reset:hover{
-  background:#0c2b14 !important;
-}
-
-#murphyDecoder .decoder-result.success{
-  color:#91ffa6 !important;
-}
-
-#murphyDecoder .decoder-result.error{
-  color:#ff6b6b !important;
-  text-shadow:none !important;
-}
-
-#murphyDecoder .decoder-footer,
-#murphyRoute .archive-site-foot{
-  background:#06160b !important;
-  border-top:1px solid #286e39 !important;
-  color:#3fa456 !important;
-}
-
-#murphyRoute .archive-site-status{
-  margin:16px !important;
-  padding:8px 10px !important;
-  background:#0a2511 !important;
-  border:1px solid #43bb5e !important;
-  text-align:center !important;
-  font-weight:700 !important;
-  letter-spacing:1px !important;
-}
-
-#murphyRoute .archive-message{
-  background:rgba(40,160,66,.09) !important;
-  border-left:3px solid #69f084 !important;
-  padding:16px !important;
-  color:#75f58e !important;
-}
-
-#murphyRoute .archive-message strong{
-  color:#9affad !important;
-}
-
-#murphyRoute .archive-code{
-  color:#96ffaa !important;
-  font-size:36px !important;
-  font-weight:700 !important;
-  text-align:center !important;
-  letter-spacing:5px !important;
-}
-
-#murphyRoute .archive-coordinates{
-  color:#54c86c !important;
-  text-align:center !important;
-}
-
-#murphyRoute .archive-separator{
-  border-top:1px dashed #397e47 !important;
-}
-
-/* keep the two terminal cards fully inside the cork board */
-#murphyDecoder,
-#murphyRoute{
-  max-width:calc(var(--bw) - 56px);
-}
+.cipher-note{font-family:Georgia,serif}
+.cipher-note h3{font-size:31px;text-transform:uppercase}
+.cipher-note .quote{max-width:230px}
+.math-note{font-family:Georgia,serif}
+.math-note p{font-size:17px}
+.math-note .lead{margin-bottom:12px}
