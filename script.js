@@ -42,6 +42,32 @@
   const canMove = () => role === 'player' || role === 'admin';
   const isAdmin = () => role === 'admin';
 
+
+  // Keep every clue completely inside the investigation board, even after rotation.
+  function clampToBoard(el, x, y, rotOverride=null) {
+    const boardW = board.clientWidth;
+    const boardH = board.clientHeight;
+    const w = el.offsetWidth;
+    const h = el.offsetHeight;
+    const id = el.dataset.id;
+    const stateRot = Number((remoteState[id] || {}).rot ?? defaults[id]?.rot ?? 0);
+    const rot = Number(rotOverride ?? stateRot) * Math.PI / 180;
+    const c = Math.abs(Math.cos(rot));
+    const s = Math.abs(Math.sin(rot));
+    const halfBoxW = (w * c + h * s) / 2;
+    const halfBoxH = (w * s + h * c) / 2;
+    const margin = 10;
+    const cx = x + w / 2;
+    const cy = y + h / 2;
+    const minCx = margin + halfBoxW;
+    const maxCx = boardW - margin - halfBoxW;
+    const minCy = margin + halfBoxH;
+    const maxCy = boardH - margin - halfBoxH;
+    const safeCx = Math.min(Math.max(cx, minCx), Math.max(minCx, maxCx));
+    const safeCy = Math.min(Math.max(cy, minCy), Math.max(minCy, maxCy));
+    return {x: safeCx - w / 2, y: safeCy - h / 2};
+  }
+
   function firebaseConfigured() {
     const c = window.FIREBASE_CONFIG || {};
     return c.apiKey && !String(c.apiKey).includes('PASTE_') &&
@@ -137,9 +163,10 @@
       const s = {...defaults[id], ...(remoteState[id] || {})};
 
       el.classList.toggle('clue-hidden', !s.visible);
-      el.style.left = Number(s.x) + 'px';
-      el.style.top = Number(s.y) + 'px';
       el.style.setProperty('--rot', Number(s.rot) + 'deg');
+      const safe = clampToBoard(el, Number(s.x), Number(s.y), Number(s.rot));
+      el.style.left = safe.x + 'px';
+      el.style.top = safe.y + 'px';
       el.style.zIndex = Number(s.z) || 10;
 
       const cb = document.querySelector(`[data-clue="${CSS.escape(id)}"]`);
@@ -213,6 +240,7 @@
     let start={};
 
     el.addEventListener('pointerdown', e => {
+      if (e.target.closest('input, button, textarea, select, a')) return;
       if (e.button !== 0 || !canMove()) return;
       e.preventDefault();
       e.stopPropagation();
@@ -235,12 +263,14 @@
     el.addEventListener('pointermove', e => {
       if(!dragging || !canMove()) return;
       const id=el.dataset.id;
-      const x=start.left+(e.clientX-start.x)/viewport.scale;
-      const y=start.top+(e.clientY-start.y)/viewport.scale;
-      el.style.left=x+'px';
-      el.style.top=y+'px';
+      const rawX=start.left+(e.clientX-start.x)/viewport.scale;
+      const rawY=start.top+(e.clientY-start.y)/viewport.scale;
+      const s={...defaults[id], ...(remoteState[id] || {})};
+      const safe=clampToBoard(el,rawX,rawY,Number(s.rot));
+      el.style.left=safe.x+'px';
+      el.style.top=safe.y+'px';
       drawThreads();
-      writeItem(id,{x:Math.round(x*10)/10,y:Math.round(y*10)/10});
+      writeItem(id,{x:Math.round(safe.x*10)/10,y:Math.round(safe.y*10)/10});
     });
 
     const finish=()=>{
@@ -395,6 +425,40 @@
     });
     await boardRef.update(updates);
   };
+
+
+  // ===== Murphy USB decoder =====
+  const decoderNote=document.getElementById('murphyDecoder');
+  if(decoderNote){
+    const decoderInput=decoderNote.querySelector('.decoder-input');
+    const decoderSubmit=decoderNote.querySelector('.decoder-submit');
+    const decoderReset=decoderNote.querySelector('.decoder-reset');
+    const decoderResult=decoderNote.querySelector('.decoder-result');
+
+    function normalizeMurphyKey(value){
+      return value.trim().toUpperCase().replace(/\s+/g,' ');
+    }
+
+    function checkMurphyKey(){
+      if(normalizeMurphyKey(decoderInput.value)==='15.06.2026 РПМ'){
+        decoderResult.className='decoder-result success';
+        decoderResult.innerHTML='&gt; КЛЮЧ ПРИНЯТ<br>&gt; ПРОВЕРКА ДАННЫХ... OK<br>&gt; ДОСТУП РАЗРЕШЁН';
+      }else{
+        decoderResult.className='decoder-result error';
+        decoderResult.innerHTML='&gt; ОШИБКА: НЕВЕРНЫЙ КЛЮЧ<br>&gt; ACCESS DENIED';
+      }
+    }
+
+    decoderSubmit.addEventListener('click',e=>{e.stopPropagation();checkMurphyKey();});
+    decoderInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();e.stopPropagation();checkMurphyKey();}});
+    decoderReset.addEventListener('click',e=>{
+      e.stopPropagation();
+      decoderInput.value='';
+      decoderResult.className='decoder-result';
+      decoderResult.innerHTML='';
+      decoderInput.focus();
+    });
+  }
 
   initFirebase();
 })();
