@@ -79,8 +79,8 @@ body.editor-mode #syncBadge::before{content:"✎ "}
 /* ===== Separate player/editor access ===== */
 #playerButton{
   position:fixed;
-  right:16px;
-  top:58px;
+  right:60px;
+  top:16px;
   z-index:1500;
   width:36px;
   height:36px;
@@ -102,3 +102,55 @@ body.player-mode #syncBadge{background:rgba(31,79,48,.88)!important;border-color
 body.player-mode #syncBadge::before{content:"✋ "}
 body.admin-mode #syncBadge{background:rgba(77,55,22,.92)!important;border-color:#b08a42!important}
 body.admin-mode #syncBadge::before{content:"⚙ "}
+
+
+/* ===== USB decoder + restored Murphy archive page ===== */
+.decoder-note,.archive-result{
+  padding:0;
+  overflow:hidden;
+  color:#5bea7d;
+  background:#061009;
+  border:2px solid #1f5a2c;
+  border-radius:4px;
+  box-shadow:0 18px 32px rgba(0,0,0,.46),0 0 18px rgba(60,220,94,.07),inset 0 0 24px rgba(0,0,0,.8);
+}
+.decoder-ui,.archive-site{
+  font-family:"Courier New",monospace;
+  background:repeating-linear-gradient(0deg,rgba(35,255,76,.028) 0,rgba(35,255,76,.028) 1px,transparent 1px,transparent 4px),#061009;
+}
+.decoder-top,.archive-site-head{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:9px 11px;border-bottom:1px solid #2c7f40;background:#09180d;
+  font-size:12px;letter-spacing:.8px;
+}
+.decoder-reset{
+  width:28px;height:28px;padding:0;border:1px solid #3a9850;border-radius:2px;
+  background:#07120a;color:#69f087;font:700 18px/1 "Courier New",monospace;cursor:pointer;
+}
+.decoder-reset:hover,.decoder-submit:hover{background:#12351a}
+.decoder-screen{padding:16px;min-height:255px}
+.decoder-line{margin-bottom:5px;font-size:12px;opacity:.78}
+.decoder-question{margin:25px 0 8px;font-size:13px;font-weight:700;letter-spacing:.4px}
+.decoder-input-row{display:flex;align-items:center;gap:7px}
+.decoder-input{
+  width:100%;padding:7px 4px;border:0;border-bottom:1px solid #5de477;outline:none;
+  color:#75f38e;background:transparent;font:700 16px/1.2 "Courier New",monospace;text-transform:uppercase;
+}
+.decoder-input::placeholder{color:#347c43}
+.decoder-submit{
+  margin-top:16px;padding:8px 11px;border:1px solid #39934d;border-radius:2px;
+  color:#6fee87;background:#09190d;font:700 12px/1 "Courier New",monospace;cursor:pointer;
+}
+.decoder-result{min-height:50px;margin-top:15px;font-size:13px;line-height:1.5}
+.decoder-result.success{color:#81ff9b;text-shadow:0 0 7px rgba(74,255,108,.22)}
+.decoder-result.error{color:#ff6767}
+.decoder-footer,.archive-site-foot{padding:7px 10px;border-top:1px solid #245e31;color:#419c53;font-size:10px}
+.archive-site-status{margin:16px;padding:8px 10px;border:1px solid #4bc166;background:#0d2713;text-align:center;font-weight:700;letter-spacing:1px}
+.archive-site-body{padding:0 18px 20px}
+.archive-command{margin-bottom:17px;font-size:12px;opacity:.72}
+.archive-message{padding:15px;border-left:3px solid #62e77c;background:rgba(47,180,73,.07);font-size:17px;line-height:1.45}
+.archive-message strong{font-size:23px;color:#84ff9b}
+.archive-separator{margin:20px 0 15px;border-top:1px dashed #367b45}
+.archive-coordinates{text-align:center;color:#55bd69;font-size:13px;letter-spacing:2px}
+.archive-code{margin-top:9px;text-align:center;color:#82ff9b;font-size:35px;font-weight:700;letter-spacing:4px;text-shadow:0 0 10px rgba(66,255,100,.25)}
+.decoder-note input,.decoder-note button{user-select:auto}
